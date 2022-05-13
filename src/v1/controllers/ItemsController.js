@@ -1,7 +1,13 @@
 const Item = require("../models/ItemsModel");
 
-const getAll = (req, res) => {
-  res.status(200).send({ message: "Inventory items" });
+const getAll = async (req, res) => {
+  try {
+    const data = await Item.find();
+    res.status(200).json(data);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ error: error.message });
+  }
 };
 
 const create = async (req, res) => {
@@ -34,7 +40,7 @@ const create = async (req, res) => {
       .status(200)
       .json({ message: "Inventory item successfully added!", item: savedData });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ error: error.message });
   }
 };
 

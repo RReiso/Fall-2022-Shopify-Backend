@@ -7,13 +7,6 @@ chai.should();
 chai.use(chaiHttp);
 
 describe("Items", () => {
-  // //Before each test empty the testing database
-  // beforeEach((done) => {
-  //   Item.deleteMany({}, (err) => {
-  //     done();
-  //   });
-  // });
-
   describe("Test POST route /api/v1/items", () => {
     it("It should not POST an item without the name field", (done) => {
       let item = {
@@ -193,18 +186,4 @@ describe("Items", () => {
       console.error(err);
     }
   });
-
-  // describe("Test GET route /api/v1/items", () => {
-  //   it("It should return all items", (done) => {
-  //     chai
-  //       .request(server)
-  //       .get("/api/v1/items")
-  //       .end((err, response) => {
-  //         response.should.have.status(200);
-  //         response.body.should.be.a("array");
-  //         response.body.length.should.not.be.eq(0);
-  //         done();
-  //       });
-  //   });
-  // });
 });
