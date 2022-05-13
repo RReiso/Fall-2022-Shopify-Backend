@@ -9,19 +9,20 @@ const create = async (req, res) => {
 
   if (!name || !type || !warehouse || !inStock) {
     return res.status(400).send({
-      message:
+      error:
         "Missing one or more required fields: (name, type, warehouse, inStock)",
     });
   }
 
   if (inStock < 0) {
     return res.status(400).send({
-      message: "The amount of items in stock must be greater or equal to 0",
+      error: "The amount of items in stock must be greater or equal to 0",
     });
   }
+
   if (money.price < 0) {
     return res.status(400).send({
-      message: "Price must be greater or equal to 0",
+      error: "Price must be greater or equal to 0",
     });
   }
 
