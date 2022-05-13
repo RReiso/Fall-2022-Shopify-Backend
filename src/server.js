@@ -12,6 +12,12 @@ app.use(express.json());
 app.use(cors());
 app.use("/api/v1/items", itemsRouter);
 
+app.get("/", (req, res) => {
+  res.status(200).send("<p>Inventory items</p>");
+});
+
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
+
+module.exports = app;
