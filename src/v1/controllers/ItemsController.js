@@ -44,8 +44,19 @@ const create = async (req, res) => {
   }
 };
 
-const getByID = (req, res) => {
-  res.send("getbyid");
+const getByID = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = await Item.findById(id);
+
+    if (!data) {
+      res.status(400).json({ error: "Item does not exist" });
+    }
+
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
 const update = (req, res) => {
@@ -60,6 +71,10 @@ const destroy = async (req, res) => {
 
     const result = await Item.findByIdAndUpdate(id, updatedData, options);
 
+    if (!result) {
+      res.status(400).json({ error: "Item does not exist" });
+    }
+
     res.status(200).json(result);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -73,6 +88,10 @@ const restore = async (req, res) => {
     const options = { new: true };
 
     const result = await Item.findByIdAndUpdate(id, updatedData, options);
+
+    if (!result) {
+      res.status(400).json({ error: "Item does not exist" });
+    }
 
     res.status(200).json(result);
   } catch (error) {

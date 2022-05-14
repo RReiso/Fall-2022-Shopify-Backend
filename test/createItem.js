@@ -170,6 +170,7 @@ describe("Items", () => {
             .property("message")
             .eql("Inventory item successfully added!");
           res.body.item.should.have.property("name");
+          res.body.item.should.have.property("type");
           res.body.item.should.have.property("description");
           res.body.item.should.have.property("inStock");
           res.body.item.should.have.property("warehouse");

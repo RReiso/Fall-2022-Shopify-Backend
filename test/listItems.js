@@ -20,11 +20,11 @@ describe("Items", () => {
       chai
         .request(server)
         .get("/api/v1/items")
-        .end((err, response) => {
-          response.should.have.status(200);
-          response.body.should.be.a("array");
-          response.body.length.should.not.be.eq(0);
-          response.body.length.should.be.eq(seedProducts.length);
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a("array");
+          res.body.length.should.not.be.eq(0);
+          res.body.length.should.be.eq(seedProducts.length);
           done();
         });
     });

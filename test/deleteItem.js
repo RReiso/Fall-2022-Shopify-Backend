@@ -47,6 +47,20 @@ describe("Items", () => {
           done();
         });
     });
+
+    it("It should not delete item that does not exist", (done) => {
+      const fakeID = "111111111111111111111111";
+      chai
+        .request(server)
+        .put(`/api/v1/items/${fakeID}/delete`)
+        .send()
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.be.a("object");
+          res.body.should.have.property("error").eql("Item does not exist");
+          done();
+        });
+    });
   });
 
   // After finishing tests, empty the testing database
