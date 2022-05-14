@@ -30,7 +30,7 @@ describe("Items", () => {
     });
   });
 
-  // After finishng tests, empty the testing database
+  // After finishing tests, empty the testing database
   after(async () => {
     try {
       await Item.deleteMany({});

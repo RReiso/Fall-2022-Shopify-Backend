@@ -52,12 +52,32 @@ const update = (req, res) => {
   res.send("update");
 };
 
-const destroy = (req, res) => {
-  res.send("destroy");
+const destroy = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedData = { ...req.body, isDeleted: true };
+    const options = { new: true };
+
+    const result = await Item.findByIdAndUpdate(id, updatedData, options);
+
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
-const restore = (req, res) => {
-  res.send("restore");
+const restore = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedData = { ...req.body, isDeleted: false };
+    const options = { new: true };
+
+    const result = await Item.findByIdAndUpdate(id, updatedData, options);
+
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
 module.exports = {
