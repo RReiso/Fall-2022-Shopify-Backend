@@ -1,6 +1,7 @@
 let chai = require("chai");
 let chaiHttp = require("chai-http");
 let server = require("../server");
+const { currencies } = require("../src/db/seeds");
 const Item = require("../src/v1/models/ItemsModel");
 
 chai.should();
@@ -146,6 +147,49 @@ describe("Items", () => {
           res.body.should.have
             .property("error")
             .eql("Price must be greater or equal to 0");
+          done();
+        });
+    });
+
+    it("It should not POST an item with wrong warehouse id", (done) => {
+      let item = {
+        name: "Samsung Galaxy A53",
+        type: "Smartphone",
+        warehouse: "ABC123456",
+        inStock: 2,
+      };
+      chai
+        .request(server)
+        .post("/api/v1/items")
+        .send(item)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.be.a("object");
+          res.body.should.have
+            .property("error")
+            .eql("Warehouse does not exist");
+          done();
+        });
+    });
+
+    it("It should not POST an item with wrong currency", (done) => {
+      let item = {
+        name: "Samsung Galaxy A53",
+        type: "Smartphone",
+        warehouse: "ABC123",
+        money: { price: 529.99, currency: "GBP" },
+        inStock: 2,
+      };
+      chai
+        .request(server)
+        .post("/api/v1/items")
+        .send(item)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.be.a("object");
+          res.body.should.have
+            .property("error")
+            .eql(`Wrong currency. Only ${currencies.join(", ")} allowed`);
           done();
         });
     });

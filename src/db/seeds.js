@@ -12,7 +12,7 @@ const seedProducts = [
     type: "Tablet",
     description: "Lorem Ipsum",
     warehouse: "CDF456",
-    money: { price: 429.99, currency: "CAD" },
+    money: { price: 429.99, currency: "USD" },
     inStock: 15,
   },
   {
@@ -22,7 +22,12 @@ const seedProducts = [
     warehouse: "GHI789",
     money: { price: 249.99, currency: "CAD" },
     inStock: 9,
+    isDeleted: true,
+    deletionComments: "Lorem ipsum sit dolor",
   },
 ];
 
-module.exports = seedProducts;
+const warehouses = ["ABC123", "CDF456", "GHI789"];
+const currencies = ["USD", "CAD"];
+
+module.exports = { seedProducts, warehouses, currencies };

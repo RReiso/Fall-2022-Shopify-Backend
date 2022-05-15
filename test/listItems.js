@@ -1,6 +1,6 @@
 let chai = require("chai");
 let chaiHttp = require("chai-http");
-const seedProducts = require("../src/db/seeds");
+const { seedProducts } = require("../src/db/seeds");
 let server = require("../server");
 const Item = require("../src/v1/models/ItemsModel");
 

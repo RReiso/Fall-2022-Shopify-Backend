@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "seed": "node src/db/seedDB.js",
-    "test": "NODE_ENV=testing mocha --recursive --exit --timeout 30000",
+    "test": "NODE_ENV=testing mocha --recursive --exit --timeout 10000",
     "dev": "nodemon src/server.js"
   },
   "keywords": [],

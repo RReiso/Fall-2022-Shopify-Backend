@@ -1,7 +1,7 @@
 require("dotenv").config();
-const seedProducts = require("./seeds");
 const mongoose = require("mongoose");
 const Item = require("../v1/models/ItemsModel");
+const { seedProducts } = require("./seeds");
 
 mongoose
   .connect(process.env.MONGO_URI, {
