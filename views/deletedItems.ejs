@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="pastel">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@2.14.3/dist/full.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="text/javascript" src="/index.js"></script>
+    <title>Deleted Items</title>
+  </head>
+  <body class="mx-2 my-6">
+    <h3 class="text-lg font-bold m-6 text-center">Deleted Inventory Items</h3>
+    <div class="m-4">
+    
+      <a
+        href="/"
+        class="cursor-pointer font-medium text-sky-600 dark:text-sky-500 mx-4 hover:underline"
+        >Back to current inventory items</a
+      >
+    </div>
+    <div class="m-4">
+      <div class="relative overflow-x-auto shadow-md sm:rounded-lg m-4">
+        <% if(error) { %>
+        <div
+          class="p-4 mb-4 text-sm text-yellow-700 bg-yellow-100 rounded-lg dark:bg-yellow-200 dark:text-yellow-800"
+          role="alert"
+        >
+          <span class="font-medium">Could not fetch items!</span> Try again later!
+        </div>
+        <% } else { %>
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <thead
+            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+          >
+            <tr>
+              <th scope="col" class="px-6 py-3">Product name</th>
+              <th scope="col" class="px-6 py-3">Type</th>
+              <th scope="col" class="px-6 py-3">Warehouse</th>
+              <th scope="col" class="px-6 py-3">Description</th>
+              <th scope="col" class="px-6 py-3">Price</th>
+              <th scope="col" class="px-6 py-3">In Stock</th>
+              <th scope="col" class="px-6 py-3">
+                <span class="sr-only">Restore</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <% items.forEach( (item) => { %>
+            <tr
+              class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+            >
+              <th
+                scope="row"
+                class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+              >
+                <%= item.name %>
+              </th>
+              <td class="px-6 py-4"><%= item.type %></td>
+              <td class="px-6 py-4"><%= item.warehouse %></td>
+              <td class="px-6 py-4"><%= item.description %></td>
+              <td class="px-6 py-4">
+                <% if( item.money.price) { %> <%= `${item.money.price}
+                ${item.money.currency}` %> <% } else { %> Not set <% } %>
+              </td>
+              <td class="px-6 py-4"><%= item.inStock %></td>
+              <td class="px-6 py-4 text-right">
+                <label
+                  for="restore-<%=item.id%>"
+                  class="cursor-pointer font-medium text-sky-600 dark:text-sky-500 hover:underline"
+                  >Restore</label
+                >
+                <input type="checkbox" id="restore-<%=item.id%>" class="modal-toggle" />
+                <%- include('partials/_restoreItemModal',{ item: item }); %>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <% } %>
+      </div>
+      
+  </body>
+</html>

@@ -6,7 +6,6 @@ const itemsRouter = require("./src/v1/routes/ItemsRouter");
 const path = require("path");
 const { warehouses, currencies } = require("./src/db/seeds");
 const Item = require("./src/v1/models/ItemsModel");
-console.log("Item", Item);
 
 const app = express();
 app.set("view engine", "ejs");
@@ -22,14 +21,30 @@ app.get("/", async (req, res) => {
   let items;
   let error;
   try {
-    items = await Item.find();
+    items = await Item.find({ isDeleted: false });
   } catch (err) {
     error = err.message;
   }
-  res.render("index", {
+  res.render("home", {
     warehouses,
     currencies,
     items,
+    error,
+  });
+});
+
+app.get("/deleted", async (req, res) => {
+  let deletedItems;
+  let error;
+  try {
+    deletedItems = await Item.find({ isDeleted: true });
+  } catch (err) {
+    error = err.message;
+  }
+  res.render("deletedItems", {
+    warehouses,
+    currencies,
+    items: deletedItems,
     error,
   });
 });
