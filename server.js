@@ -4,6 +4,7 @@ const connectDB = require("./src/db/conn");
 const cors = require("cors");
 const itemsRouter = require("./src/v1/routes/ItemsRouter");
 const path = require("path");
+const { warehouses, currencies } = require("./src/db/seeds");
 
 const app = express();
 app.set("view engine", "ejs");
@@ -16,7 +17,7 @@ app.use("/api/v1/items", itemsRouter);
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("index", { warehouses: warehouses, currencies: currencies });
 });
 
 app.listen(PORT, () => {

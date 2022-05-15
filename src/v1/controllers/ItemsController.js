@@ -26,18 +26,31 @@ const create = async (req, res) => {
     });
   }
 
+  if (money?.price && !money.currency) {
+    return res.status(400).send({
+      error: "Missing currency",
+    });
+  }
+
+  if (money?.currency && !money.price) {
+    return res.status(400).send({
+      error: "Missing price",
+    });
+  }
+
   if (money?.price < 0) {
     return res.status(400).send({
       error: "Price must be greater or equal to 0",
     });
   }
+
   if (!warehouses.includes(warehouse)) {
     return res.status(400).send({
       error: "Warehouse does not exist",
     });
   }
 
-  if (!currencies.includes(money.currency)) {
+  if (money && !currencies.includes(money.currency)) {
     return res.status(400).send({
       error: `Wrong currency. Only ${currencies.join(", ")} allowed`,
     });
