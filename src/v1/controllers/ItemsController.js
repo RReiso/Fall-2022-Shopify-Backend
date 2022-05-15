@@ -26,19 +26,19 @@ const create = async (req, res) => {
     });
   }
 
-  if (money?.price && !money.currency) {
-    return res.status(400).send({
-      error: "Missing currency",
-    });
-  }
-
-  if (money?.currency && !money.price) {
+  if (money && !money.price) {
     return res.status(400).send({
       error: "Missing price",
     });
   }
 
-  if (money?.price < 0) {
+  if (money && !money.currency) {
+    return res.status(400).send({
+      error: "Missing currency",
+    });
+  }
+
+  if (money && money.price < 0) {
     return res.status(400).send({
       error: "Price must be greater or equal to 0",
     });

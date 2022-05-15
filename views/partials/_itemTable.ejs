@@ -1,0 +1,59 @@
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg m-4">
+  <% if(error) { %>
+  <div
+    class="p-4 mb-4 text-sm text-yellow-700 bg-yellow-100 rounded-lg dark:bg-yellow-200 dark:text-yellow-800"
+    role="alert"
+  >
+    <span class="font-medium">Could not fetch items!</span> Try again later!
+  </div>
+  <% } else { %>
+  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+    <thead
+      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+    >
+      <tr>
+        <th scope="col" class="px-6 py-3">Product name</th>
+        <th scope="col" class="px-6 py-3">Type</th>
+        <th scope="col" class="px-6 py-3">Warehouse</th>
+        <th scope="col" class="px-6 py-3">Description</th>
+        <th scope="col" class="px-6 py-3">Price</th>
+        <th scope="col" class="px-6 py-3">In Stock</th>
+        <th scope="col" class="px-6 py-3">
+          <span class="sr-only">Edit</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% items.forEach( (item) => { %>
+      <tr
+        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+      >
+        <th
+          scope="row"
+          class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+        >
+          <%= item.name %>
+        </th>
+        <td class="px-6 py-4"><%= item.type %></td>
+        <td class="px-6 py-4"><%= item.warehouse %></td>
+        <td class="px-6 py-4"><%= item.description %></td>
+        <td class="px-6 py-4">
+          <% if( item.money.price) { %> <%= `${item.money.price}
+          ${item.money.currency}` %> <% } else { %> Not set <% } %>
+        </td>
+        <td class="px-6 py-4"><%= item.inStock %></td>
+        <td class="px-6 py-4 text-right">
+          <label
+            for="<%=item.id%>"
+            class="cursor-pointer font-medium text-blue-600 dark:text-blue-500 hover:underline"
+            >Edit</label
+          >
+          <input type="checkbox" id="<%=item.id%>" class="modal-toggle" />
+          <%- include('./_editItemModal',{ item: item }); %>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <% } %>
+</div>

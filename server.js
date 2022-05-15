@@ -5,6 +5,8 @@ const cors = require("cors");
 const itemsRouter = require("./src/v1/routes/ItemsRouter");
 const path = require("path");
 const { warehouses, currencies } = require("./src/db/seeds");
+const Item = require("./src/v1/models/ItemsModel");
+console.log("Item", Item);
 
 const app = express();
 app.set("view engine", "ejs");
@@ -16,8 +18,20 @@ app.use(cors());
 app.use("/api/v1/items", itemsRouter);
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get("/", (req, res) => {
-  res.render("index", { warehouses: warehouses, currencies: currencies });
+app.get("/", async (req, res) => {
+  let items;
+  let error;
+  try {
+    items = await Item.find();
+  } catch (err) {
+    error = err.message;
+  }
+  res.render("index", {
+    warehouses,
+    currencies,
+    items,
+    error,
+  });
 });
 
 app.listen(PORT, () => {

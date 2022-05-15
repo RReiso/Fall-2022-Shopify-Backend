@@ -1,17 +1,17 @@
 <div class="modal">
   <div class="modal-box relative">
     <label
-      for="new-item-modal"
+      for="<%=item.id%>"
       class="btn btn-sm btn-circle absolute right-2 top-2"
       >✕</label
     >
-    <h3 class="text-lg font-bold mb-4">Add new inventory item</h3>
+    <h3 class="text-lg font-bold mb-4 text-left">Edit inventory item</h3>
     <form class="max-w-lg">
       <div class="flex flex-col">
         <div class="mb-4">
           <label
             for="item-name"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 text-left"
             >Item name *</label
           >
           <input
@@ -19,29 +19,33 @@
             id="item-name"
             class="w-48 bg-gray-50 border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
+            value="<%= item.name %>"
           />
         </div>
         <div class="mb-4">
           <label
             for="description"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 text-left"
             >Description</label
           >
           <textarea
             id="description"
             rows="3"
             class="bg-gray-50 border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          ></textarea>
+          >
+<%= item.description %></textarea
+          >
         </div>
         <div class="mb-4">
           <label
             for="type"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 text-left"
             >Type *</label
           >
           <input
             type="input"
             id="type"
+            value="<%= item.type %>"
             class="w-48 bg-gray-50 border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
           />
@@ -52,7 +56,7 @@
           <div class="mb-4 w-24">
             <label
               for="warehouses"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400 text-left"
               >Select warehouse *</label
             >
             <select
@@ -61,18 +65,19 @@
               class="bg-gray-50 border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
               <% warehouses.forEach( w =>{ %>
-              <option><%= w %></option>
+              <option <%= item.warehouse ===w ? "selected" : "" %> ><%= w %></option>
               <% }) %>
             </select>
           </div>
           <div class="mb-4 w-24 mx-1">
             <label
-              for="price"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              for="type"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 text-left"
               >Price</label
             >
             <input
               type="number"
+              value="<%= item.money.price %>"
               id="price"
               min="0"
               step="0.01"
@@ -83,7 +88,7 @@
           <div class="mb-4 w-24 mx-1">
             <label
               for="currencies"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400 text-left"
               >Select currency</label
             >
             <select
@@ -92,18 +97,21 @@
               class="bg-gray-50 border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
               <% currencies.forEach( c => { %>
-              <option><%= c %></option>
+              <option <%= item.money.currency === c ? "selected" : "" %> >
+                <%= c %>
+              </option>
               <% }) %>
             </select>
           </div>
           <div class="mb-4 w-24">
             <label
               for="amount"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 text-left"
               >Number of items *</label
             >
             <input
               type="number"
+              value="<%= item.inStock %>"
               id="amount"
               min="0"
               class="bg-gray-50 border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -116,7 +124,7 @@
           type="submit"
           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
-          Add item
+          Save
         </button>
       </div>
     </form>
