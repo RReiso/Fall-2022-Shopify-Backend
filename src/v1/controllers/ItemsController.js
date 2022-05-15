@@ -11,6 +11,7 @@ const getAll = async (req, res) => {
 };
 
 const create = async (req, res) => {
+  console.log("HEREE");
   const { name, type, warehouse, inStock, money } = req.body;
 
   if (!name || !type || !warehouse || !inStock) {

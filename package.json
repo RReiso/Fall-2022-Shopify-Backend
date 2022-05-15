@@ -1,12 +1,18 @@
 {
   "name": "fall-2022-back-end",
+  "proxy": "https://https://fall-2022-shopify-backend.rreiso.repl.co/",
+  "comments": {
+    "proxyHost": "https://https://fall-2022-shopify-backend.rreiso.repl.co",
+    "proxyLocal": "http://localhost:3000"
+  },
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
     "seed": "node src/db/seedDB.js",
     "test": "NODE_ENV=testing mocha --recursive --exit --timeout 10000",
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "bundle": "browserify public/js/* -o public/bundle.js"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +21,8 @@
     "nodemon": "^2.0.16"
   },
   "dependencies": {
+    "axios": "^0.27.2",
+    "browserify": "^17.0.0",
     "chai": "^4.3.6",
     "chai-http": "^4.3.0",
     "cors": "^2.8.5",
