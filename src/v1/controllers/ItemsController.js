@@ -2,10 +2,9 @@ const Item = require("../models/ItemsModel");
 
 const getAll = async (req, res) => {
   try {
-    const data = await Item.find();
-    res.status(200).json(data);
+    const items = await Item.find();
+    res.status(200).json(items);
   } catch (error) {
-    console.log(error.message);
     res.status(500).json({ error: error.message });
   }
 };
@@ -32,13 +31,13 @@ const create = async (req, res) => {
     });
   }
 
-  const data = new Item(req.body);
+  const newItem = new Item(req.body);
 
   try {
-    const savedData = await data.save();
+    const savedItem = await newItem.save();
     res
       .status(200)
-      .json({ message: "Inventory item successfully added!", item: savedData });
+      .json({ message: "Inventory item successfully added!", item: savedItem });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -47,20 +46,51 @@ const create = async (req, res) => {
 const getByID = async (req, res) => {
   try {
     const { id } = req.params;
-    const data = await Item.findById(id);
+    const item = await Item.findById(id);
 
-    if (!data) {
-      res.status(400).json({ error: "Item does not exist" });
+    if (!item) {
+      return res.status(400).json({ error: "Item does not exist" });
     }
 
-    res.status(200).json(data);
+    res.status(200).json(item);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-const update = (req, res) => {
-  res.send("update");
+const update = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedData = req.body;
+    const options = { new: true };
+
+    if (Object.keys(updatedData).length === 0) {
+      return res
+        .status(400)
+        .json({ error: "Request body is empty. You must specify a field." });
+    }
+
+    const item = await Item.findById(id);
+
+    if (!item) {
+      return res.status(400).json({ error: "Item does not exist" });
+    }
+
+    if (item.isDeleted) {
+      return res.status(400).json({ error: "Cannot update deleted item" });
+    }
+
+    if (updatedData.isDeleted) {
+      return res
+        .status(400)
+        .json({ error: "Update not allowed for field 'isDeleted'" });
+    }
+
+    const result = await Item.findByIdAndUpdate(id, updatedData, options);
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
 const destroy = async (req, res) => {
@@ -72,7 +102,7 @@ const destroy = async (req, res) => {
     const result = await Item.findByIdAndUpdate(id, updatedData, options);
 
     if (!result) {
-      res.status(400).json({ error: "Item does not exist" });
+      return res.status(400).json({ error: "Item does not exist" });
     }
 
     res.status(200).json(result);
@@ -90,7 +120,7 @@ const restore = async (req, res) => {
     const result = await Item.findByIdAndUpdate(id, updatedData, options);
 
     if (!result) {
-      res.status(400).json({ error: "Item does not exist" });
+      return res.status(400).json({ error: "Item does not exist" });
     }
 
     res.status(200).json(result);
