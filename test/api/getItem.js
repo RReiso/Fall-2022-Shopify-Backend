@@ -12,7 +12,6 @@ describe("Items", () => {
   beforeEach((done) => {
     item = new Item({
       name: "Samsung Galaxy A53",
-      type: "Smartphone",
       description: "Lorem Ipsum",
       warehouse: "ABC123",
       money: { price: 529.99, currency: "CAD" },
@@ -30,7 +29,6 @@ describe("Items", () => {
           res.should.have.status(200);
           res.body.should.be.a("object");
           res.body.should.have.property("name");
-          res.body.should.have.property("type");
           res.body.should.have.property("description");
           res.body.should.have.property("inStock");
           res.body.should.have.property("money");

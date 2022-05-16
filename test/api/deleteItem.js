@@ -12,7 +12,6 @@ describe("Items", () => {
   beforeEach((done) => {
     item = new Item({
       name: "Samsung Galaxy A53",
-      type: "Smartphone",
       description: "Lorem Ipsum",
       warehouse: "ABC123",
       money: { price: 529.99, currency: "CAD" },

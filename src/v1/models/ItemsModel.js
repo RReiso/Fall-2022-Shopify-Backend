@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const itemsModel = mongoose.Schema(
   {
     name: { type: String, trim: true, required: true },
-    type: { type: String, required: true },
     description: { type: String },
     warehouse: {
       type: String,

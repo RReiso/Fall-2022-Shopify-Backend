@@ -2,6 +2,7 @@ const { default: axios } = require("axios");
 
 const handleSubmit = async (event) => {
   event.preventDefault();
+  const modalCheckbox = document.querySelector("#new-item-modal");
   const itemName = document.querySelector("#item-name").value;
   const description = document.querySelector("#description").value;
   const type = document.querySelector("#type").value;
@@ -28,6 +29,7 @@ const handleSubmit = async (event) => {
   try {
     await axios.post("/api/v1/items", requestBody);
     window.location.reload();
+    modalCheckbox.checked = false;
   } catch (error) {
     console.error(error.message);
     alert(`${error.message}. ${error.response?.data?.error || ""}`);

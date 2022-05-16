@@ -11,12 +11,11 @@ const getAll = async (req, res) => {
 };
 
 const create = async (req, res) => {
-  const { name, type, warehouse, inStock, money } = req.body;
+  const { name, warehouse, inStock, money } = req.body;
 
-  if (!name || !type || !warehouse || !inStock) {
+  if (!name || !warehouse || !inStock) {
     return res.status(400).send({
-      error:
-        "Missing one or more required fields: (name, type, warehouse, inStock)",
+      error: "Missing one or more required fields: (name, warehouse, inStock)",
     });
   }
 

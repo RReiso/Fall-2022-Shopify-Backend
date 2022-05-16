@@ -17,12 +17,12 @@
       class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
     >
       <tr>
-        <th scope="col" class="px-2 pl-4 py-3">Product name</th>
-        <th scope="col" class="px-2 py-3">Type</th>
+        <th scope="col" class="px-2 pl-4 py-3">Product</th>
         <th scope="col" class="px-2 py-3">Warehouse</th>
         <th scope="col" class="px-2 py-3">Description</th>
         <th scope="col" class="px-2 py-3">Price</th>
         <th scope="col" class="px-2 py-3">In Stock</th>
+        <th scope="col" class="px-2 py-3">Undeletion comments</th>
         <th scope="col" class="px-2 py-3">
           <span class="sr-only">Edit</span>
         </th>
@@ -39,7 +39,6 @@
         >
           <%= item.name %>
         </th>
-        <td class="px-2 py-4"><%= item.type %></td>
         <td class="px-2 py-4"><%= item.warehouse %></td>
         <td class="px-2 py-4"><%= item.description %></td>
         <td class="px-2 py-4">
@@ -48,13 +47,14 @@
           <% } %>
         </td>
         <td class="px-2 py-4"><%= item.inStock %></td>
+        <td class="px-2 py-4"><%= item.deletionComments %></td>
         <td class="px-2 py-4 pr-4 text-right">
           <label
-            for="<%=item.id%>"
+            for="edit-<%=item.id%>"
             class="cursor-pointer font-medium text-sky-600 dark:text-sky-500 hover:underline"
             >Edit</label
           >
-          <input type="checkbox" id="<%=item.id%>" class="modal-toggle" />
+          <input type="checkbox" id="edit-<%=item.id%>" class="modal-toggle" />
           <%- include('./_editItemModal',{ item: item }); %>
         </td>
       </tr>

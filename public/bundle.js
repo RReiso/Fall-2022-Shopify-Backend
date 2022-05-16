@@ -4389,6 +4389,7 @@ const { default: axios } = require("axios");
 
 const handleSubmit = async (event) => {
   event.preventDefault();
+  const modalCheckbox = document.querySelector("#new-item-modal");
   const itemName = document.querySelector("#item-name").value;
   const description = document.querySelector("#description").value;
   const type = document.querySelector("#type").value;
@@ -4415,6 +4416,7 @@ const handleSubmit = async (event) => {
   try {
     await axios.post("/api/v1/items", requestBody);
     window.location.reload();
+    modalCheckbox.checked = false;
   } catch (error) {
     console.error(error.message);
     alert(`${error.message}. ${error.response?.data?.error || ""}`);
@@ -4470,14 +4472,13 @@ const handleSave = async (event) => {
   event.preventDefault();
   const modal = event.target.closest(".modal");
   const itemId = modal.id;
+  const modalCheckbox = document.querySelector(`#edit-${itemId}`);
   const itemName = modal.querySelector(`#item-name-${itemId}`).value;
   const description = modal.querySelector(`#description-${itemId}`).value;
   const type = modal.querySelector(`#type-${itemId}`).value;
   const warehouse = modal.querySelector(`#warehouses-${itemId}`).value;
   const price = modal.querySelector(`#price-${itemId}`).value;
-  console.log("price", price);
   const currency = modal.querySelector(`#currencies-${itemId}`).value;
-  console.log(!currency);
   const amount = modal.querySelector(`#amount-${itemId}`).value;
 
   const requestBody = {
@@ -4494,12 +4495,12 @@ const handleSave = async (event) => {
     requestBody.money = { currency };
   } else {
     requestBody.money = { price, currency };
-    console.log(requestBody);
   }
 
   try {
     await axios.put(`/api/v1/items/${itemId}`, requestBody);
     window.location.reload();
+    modalCheckbox.checked = false;
   } catch (error) {
     console.error(error.message);
     alert(`${error.message}. ${error.response?.data?.error || ""}`);
@@ -4509,6 +4510,8 @@ const handleDeletion = async (event, mode) => {
   event.preventDefault();
   const modal = event.target.closest(".modal");
   const itemId = modal.id;
+  const modalCheckboxEdit = document.querySelector(`#edit-${itemId}`);
+  const modalCheckboxRestore = document.querySelector(`#restore-${itemId}`);
   const deletionComments = modal.querySelector(
     `#deletion-comments-${itemId}`
   ).value;
@@ -4520,6 +4523,11 @@ const handleDeletion = async (event, mode) => {
   try {
     await axios.put(`/api/v1/items/${itemId}/${mode}`, requestBody);
     window.location.reload();
+    if (mode === "delete") {
+      modalCheckboxEdit.checked = false;
+    } else {
+      modalCheckboxRestore.checked = false;
+    }
   } catch (error) {
     console.error(error.message);
     alert(`${error.message}. ${error.response?.data?.error || ""}`);
