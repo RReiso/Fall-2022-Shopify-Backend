@@ -181,7 +181,9 @@ describe("Items", () => {
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.be.a("object");
-          res.body.should.have.property("error").eql("Missing price");
+          res.body.should.have
+            .property("error")
+            .eql("Must have price if adding currency or leave both blank.");
           done();
         });
     });
@@ -200,7 +202,9 @@ describe("Items", () => {
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.be.a("object");
-          res.body.should.have.property("error").eql("Missing currency");
+          res.body.should.have
+            .property("error")
+            .eql("Must have currency if adding a price or leave both blank.");
           done();
         });
     });

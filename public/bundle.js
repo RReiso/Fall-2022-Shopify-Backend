@@ -4390,33 +4390,36 @@ const { default: axios } = require("axios");
 const handleSubmit = async (event) => {
   event.preventDefault();
   const modalCheckbox = document.querySelector("#new-item-modal");
-  const itemName = document.querySelector("#item-name").value;
-  const description = document.querySelector("#description").value;
-  const type = document.querySelector("#type").value;
-  const warehouse = document.querySelector("#warehouses").value;
-  const price = document.querySelector("#price").value;
-  const currency = document.querySelector("#currencies").value;
-  const amount = document.querySelector("#amount").value;
+  let itemName = document.querySelector("#item-name");
+  let description = document.querySelector("#description");
+  let warehouse = document.querySelector("#warehouses");
+  let price = document.querySelector("#price");
+  let currency = document.querySelector("#currencies");
+  let amount = document.querySelector("#amount");
   const requestBody = {
-    name: itemName,
-    description,
-    type,
-    warehouse,
-    inStock: amount,
+    name: itemName.value,
+    description: description.value,
+    warehouse: warehouse.value,
+    inStock: amount.value,
   };
 
-  if (price && !currency) {
-    requestBody.money = { price };
-  } else if (currency && !price) {
-    requestBody.money = { currency };
-  } else if (price && currency) {
-    requestBody.money = { price, currency };
+  if (price.value && !currency.value) {
+    requestBody.money = { price: price.value };
+  } else if (currency.value && !price.value) {
+    requestBody.money = { currency: currency.value };
+  } else if (price.value && currency.value) {
+    requestBody.money = { price: price.value, currency: currency.value };
   }
 
   try {
     await axios.post("/api/v1/items", requestBody);
     window.location.reload();
     modalCheckbox.checked = false;
+    itemName.value = "";
+    description.value = "";
+    price.value = "";
+    currency.value = "";
+    amount.value = "";
   } catch (error) {
     console.error(error.message);
     alert(`${error.message}. ${error.response?.data?.error || ""}`);
@@ -4475,7 +4478,6 @@ const handleSave = async (event) => {
   const modalCheckbox = document.querySelector(`#edit-${itemId}`);
   const itemName = modal.querySelector(`#item-name-${itemId}`).value;
   const description = modal.querySelector(`#description-${itemId}`).value;
-  const type = modal.querySelector(`#type-${itemId}`).value;
   const warehouse = modal.querySelector(`#warehouses-${itemId}`).value;
   const price = modal.querySelector(`#price-${itemId}`).value;
   const currency = modal.querySelector(`#currencies-${itemId}`).value;
@@ -4484,7 +4486,6 @@ const handleSave = async (event) => {
   const requestBody = {
     name: itemName,
     description,
-    type,
     warehouse,
     inStock: amount,
   };

@@ -44,7 +44,6 @@ const handleSave = async (event) => {
   const modalCheckbox = document.querySelector(`#edit-${itemId}`);
   const itemName = modal.querySelector(`#item-name-${itemId}`).value;
   const description = modal.querySelector(`#description-${itemId}`).value;
-  const type = modal.querySelector(`#type-${itemId}`).value;
   const warehouse = modal.querySelector(`#warehouses-${itemId}`).value;
   const price = modal.querySelector(`#price-${itemId}`).value;
   const currency = modal.querySelector(`#currencies-${itemId}`).value;
@@ -53,7 +52,6 @@ const handleSave = async (event) => {
   const requestBody = {
     name: itemName,
     description,
-    type,
     warehouse,
     inStock: amount,
   };

@@ -27,13 +27,13 @@ const create = async (req, res) => {
 
   if (money && money.currency && !money.price) {
     return res.status(400).send({
-      error: "Missing price",
+      error: "Must have price if adding currency or leave both blank.",
     });
   }
 
   if (money && money.price && !money.currency) {
     return res.status(400).send({
-      error: "Missing currency",
+      error: "Must have currency if adding a price or leave both blank.",
     });
   }
 
@@ -115,13 +115,13 @@ const update = async (req, res) => {
 
     if (money && money.currency && !money.price) {
       return res.status(400).send({
-        error: "Missing price",
+        error: "Must have price if adding currency or leave both blank.",
       });
     }
 
     if (money && money.price && !money.currency) {
       return res.status(400).send({
-        error: "Missing currency",
+        error: "Must have currency if adding a price or leave both blank.",
       });
     }
 
