@@ -14,10 +14,17 @@ const handleClick = (event) => {
     ) {
       // The user clicked on a <button> or clicked on an element inside a <button>
       // with a class name called "edit-save-btn"
-      handleSave(event);
+      handleSave(event, "edit");
       break;
     }
 
+    if (
+      element.nodeName === "BUTTON" &&
+      /edit-delete-btn/.test(element.className)
+    ) {
+      handleDelete(event);
+      break;
+    }
     element = element.parentNode;
   }
 };
@@ -44,6 +51,25 @@ const handleSave = async (event) => {
   };
   try {
     await axios.put(`/api/v1/items/${itemId}`, requestBody);
+    window.location.reload();
+  } catch (error) {
+    console.error(error.message);
+    alert(`${error.message}. ${error.response?.data?.error || ""}`);
+  }
+};
+const handleDelete = async (event) => {
+  event.preventDefault();
+  const modal = event.target.closest(".modal");
+  const itemId = modal.id;
+  const deletionComments = modal.querySelector(
+    `#deletion-comments-${itemId}`
+  ).value;
+
+  const requestBody = {
+    deletionComments,
+  };
+  try {
+    await axios.put(`/api/v1/items/${itemId}/delete`, requestBody);
     window.location.reload();
   } catch (error) {
     console.error(error.message);
