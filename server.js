@@ -16,7 +16,9 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cors());
-app.use(cache("2 minutes"));
+if (process.env.NODE_ENV !== "testing") {
+  app.use(cache("2 minutes"));
+}
 app.use("/api/v1/items", itemsRouter);
 app.use(express.static(path.join(__dirname, "public")));
 

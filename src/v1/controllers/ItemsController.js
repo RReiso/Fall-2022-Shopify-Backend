@@ -38,9 +38,9 @@ const create = async (req, res) => {
     });
   }
 
-  if (money && money.price < 0.01) {
+  if (money && money.price < 0) {
     return res.status(400).send({
-      error: "Price must be greater or equal to 0.01",
+      error: "Price must be greater or equal to 0",
     });
   }
 

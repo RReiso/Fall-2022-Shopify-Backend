@@ -105,7 +105,7 @@ describe("Items", () => {
         });
     });
 
-    it("It should not POST an item if inStock count is lesss than 0", (done) => {
+    it("It should not POST an item if inStock count is less than 0", (done) => {
       let item = {
         name: "Samsung Galaxy A53",
         type: "Smartphone",
@@ -128,7 +128,7 @@ describe("Items", () => {
         });
     });
 
-    it("It should not POST an item if item price is lesss than 0", (done) => {
+    it("It should not POST an item if item price is less than 0", (done) => {
       let item = {
         name: "Samsung Galaxy A53",
         type: "Smartphone",
@@ -146,7 +146,7 @@ describe("Items", () => {
           res.body.should.be.a("object");
           res.body.should.have
             .property("error")
-            .eql("Price must be greater or equal to 0.01");
+            .eql("Price must be greater or equal to 0");
           done();
         });
     });
@@ -242,7 +242,7 @@ describe("Items", () => {
       let item = {
         name: "Samsung Galaxy A53",
         type: "Smartphone",
-        description: "Lorem Ipsum",
+        description: "Lorem Ipsum dolor",
         warehouse: "ABC123",
         money: { price: 529.99, currency: "CAD" },
         inStock: 20,
