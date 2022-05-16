@@ -4396,15 +4396,22 @@ const handleSubmit = async (event) => {
   const price = document.querySelector("#price").value;
   const currency = document.querySelector("#currencies").value;
   const amount = document.querySelector("#amount").value;
-
   const requestBody = {
     name: itemName,
     description,
     type,
     warehouse,
-    money: { price, currency },
     inStock: amount,
   };
+
+  if (price && !currency) {
+    requestBody.money = { price };
+  } else if (currency && !price) {
+    requestBody.money = { currency };
+  } else if (price && currency) {
+    requestBody.money = { price, currency };
+  }
+
   try {
     await axios.post("/api/v1/items", requestBody);
     window.location.reload();
@@ -4415,7 +4422,9 @@ const handleSubmit = async (event) => {
 };
 
 const form = document.querySelector("#new-item-form");
-form.addEventListener("submit", handleSubmit);
+if (form) {
+  form.addEventListener("submit", handleSubmit);
+}
 
 },{"axios":1}],38:[function(require,module,exports){
 const { default: axios } = require("axios");
@@ -4434,7 +4443,7 @@ const handleClick = (event) => {
     ) {
       // The user clicked on a <button> or clicked on an element inside a <button>
       // with a class name called "edit-save-btn"
-      handleSave(event, "edit");
+      handleSave(event);
       break;
     }
 
@@ -4442,7 +4451,15 @@ const handleClick = (event) => {
       element.nodeName === "BUTTON" &&
       /edit-delete-btn/.test(element.className)
     ) {
-      handleDelete(event);
+      handleDeletion(event, "delete");
+      break;
+    }
+
+    if (
+      element.nodeName === "BUTTON" &&
+      /restore-btn/.test(element.className)
+    ) {
+      handleDeletion(event, "restore");
       break;
     }
     element = element.parentNode;
@@ -4458,7 +4475,9 @@ const handleSave = async (event) => {
   const type = modal.querySelector(`#type-${itemId}`).value;
   const warehouse = modal.querySelector(`#warehouses-${itemId}`).value;
   const price = modal.querySelector(`#price-${itemId}`).value;
+  console.log("price", price);
   const currency = modal.querySelector(`#currencies-${itemId}`).value;
+  console.log(!currency);
   const amount = modal.querySelector(`#amount-${itemId}`).value;
 
   const requestBody = {
@@ -4466,9 +4485,18 @@ const handleSave = async (event) => {
     description,
     type,
     warehouse,
-    money: { price, currency },
     inStock: amount,
   };
+
+  if (price && !currency) {
+    requestBody.money = { price };
+  } else if (currency && !price) {
+    requestBody.money = { currency };
+  } else {
+    requestBody.money = { price, currency };
+    console.log(requestBody);
+  }
+
   try {
     await axios.put(`/api/v1/items/${itemId}`, requestBody);
     window.location.reload();
@@ -4477,7 +4505,7 @@ const handleSave = async (event) => {
     alert(`${error.message}. ${error.response?.data?.error || ""}`);
   }
 };
-const handleDelete = async (event) => {
+const handleDeletion = async (event, mode) => {
   event.preventDefault();
   const modal = event.target.closest(".modal");
   const itemId = modal.id;
@@ -4488,8 +4516,9 @@ const handleDelete = async (event) => {
   const requestBody = {
     deletionComments,
   };
+
   try {
-    await axios.put(`/api/v1/items/${itemId}/delete`, requestBody);
+    await axios.put(`/api/v1/items/${itemId}/${mode}`, requestBody);
     window.location.reload();
   } catch (error) {
     console.error(error.message);
@@ -4503,7 +4532,4 @@ if (document.addEventListener) {
   document.attachEvent("onclick", handleClick);
 }
 
-},{"axios":1}],39:[function(require,module,exports){
-console.log("Restore Item");
-
-},{}]},{},[37,38,39]);
+},{"axios":1}]},{},[37,38]);

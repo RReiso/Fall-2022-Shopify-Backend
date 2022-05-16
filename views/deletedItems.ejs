@@ -10,7 +10,6 @@
       type="text/css"
     />
     <script src="https://cdn.tailwindcss.com"></script>
-    <script type="text/javascript" src="/js/restoreItem.js"></script>
     <title>Deleted Items</title>
   </head>
   <body class="mx-2 my-6">
@@ -65,7 +64,7 @@
               <td class="px-2 py-4"><%= item.warehouse %></td>
               <td class="px-2 py-4"><%= item.description %></td>
               <td class="px-2 py-4">
-                <% if( item.money.price) { %> <%= `${item.money.price}
+                <% if (item.money.price || item.money.price === 0) { %> <%= `${item.money.price}
                 ${item.money.currency}` %> <% } else { %> Not set <% } %>
               </td>
               <td class="px-2 py-4"><%= item.inStock %></td>
@@ -85,6 +84,6 @@
         </table>
         <% } %>
       </div>
-      
+    <script type="text/javascript" src="/bundle.js"></script>
   </body>
 </html>

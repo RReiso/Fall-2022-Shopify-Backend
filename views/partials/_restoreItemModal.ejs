@@ -1,4 +1,4 @@
-<div class="modal">
+<div class="modal" id="<%=item.id%>">
   <div class="modal-box relative">
     <label
       for="restore-<%=item.id%>"
@@ -12,12 +12,12 @@
       <div class="flex flex-col">
         <div class="mb-4">
           <label
-            for="delition-comments-<%=item.id%>"
+            for="deletion-comments-<%=item.id%>"
             class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300 text-left"
             >Restore the item?
           </label>
           <textarea
-            id="delition-comments-<%=item.id%>"
+            id="deletion-comments-<%=item.id%>"
             rows="2"
             placeholder="Write your comments here"
             class="bg-gray-50 border text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500"
@@ -25,7 +25,7 @@
         </div>
         <button
           type="submit"
-          class="text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-sky-600 dark:hover:bg-sky-700 dark:focus:ring-sky-800"
+          class="restore-btn text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-sky-600 dark:hover:bg-sky-700 dark:focus:ring-sky-800"
         >
           Restore
         </button>

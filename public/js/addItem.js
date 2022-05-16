@@ -9,15 +9,22 @@ const handleSubmit = async (event) => {
   const price = document.querySelector("#price").value;
   const currency = document.querySelector("#currencies").value;
   const amount = document.querySelector("#amount").value;
-
   const requestBody = {
     name: itemName,
     description,
     type,
     warehouse,
-    money: { price, currency },
     inStock: amount,
   };
+
+  if (price && !currency) {
+    requestBody.money = { price };
+  } else if (currency && !price) {
+    requestBody.money = { currency };
+  } else if (price && currency) {
+    requestBody.money = { price, currency };
+  }
+
   try {
     await axios.post("/api/v1/items", requestBody);
     window.location.reload();
@@ -28,4 +35,6 @@ const handleSubmit = async (event) => {
 };
 
 const form = document.querySelector("#new-item-form");
-form.addEventListener("submit", handleSubmit);
+if (form) {
+  form.addEventListener("submit", handleSubmit);
+}

@@ -41,8 +41,9 @@
         <td class="px-2 py-4"><%= item.warehouse %></td>
         <td class="px-2 py-4"><%= item.description %></td>
         <td class="px-2 py-4">
-          <% if( item.money.price) { %> <%= `${item.money.price}
-          ${item.money.currency}` %> <% } else { %> Not set <% } %>
+          <% if (item.money.price || item.money.price === 0) { %> <%=
+          `${item.money.price} ${item.money.currency}` %> <% } else { %> Not set
+          <% } %>
         </td>
         <td class="px-2 py-4"><%= item.inStock %></td>
         <td class="px-2 py-4 pr-4 text-right">
