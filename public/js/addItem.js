@@ -9,7 +9,6 @@ const handleSubmit = async (event) => {
   const price = document.querySelector("#price").value;
   const currency = document.querySelector("#currencies").value;
   const amount = document.querySelector("#amount").value;
-  console.log("itemName", warehouse);
 
   const requestBody = {
     name: itemName,
@@ -24,7 +23,7 @@ const handleSubmit = async (event) => {
     window.location.reload();
   } catch (error) {
     console.error(error.message);
-    alert(`${error.response.data.error}. ${error.message}.`);
+    alert(`${error.message}. ${error.response?.data?.error || ""}`);
   }
 };
 

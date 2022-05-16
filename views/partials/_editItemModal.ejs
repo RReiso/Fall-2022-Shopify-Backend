@@ -1,4 +1,4 @@
-<div class="modal">
+<div class="modal" id=<%=item.id%>>
   <div class="modal-box relative">
     <label
       for="<%=item.id%>"
@@ -55,12 +55,12 @@
         <div class="flex flex-wrap justify-between items-end">
           <div class="mb-4 w-24">
             <label
-              for="warehouses--<%=item.id%>"
+              for="warehouses-<%=item.id%>"
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400 text-left"
               >Select warehouse *</label
             >
             <select
-              id="warehouses--<%=item.id%>"
+              id="warehouses-<%=item.id%>"
               required
               class="bg-gray-50 border text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500"
             >
@@ -120,7 +120,7 @@
 
         <button
           type="submit"
-          class="text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-sky-600 dark:hover:bg-sky-700 dark:focus:ring-sky-800"
+          class="edit-save-btn text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-sky-600 dark:hover:bg-sky-700 dark:focus:ring-sky-800"
         >
           Save
         </button>
