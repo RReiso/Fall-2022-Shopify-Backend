@@ -11,7 +11,6 @@ const getAll = async (req, res) => {
 };
 
 const create = async (req, res) => {
-  console.log("HEREE");
   const { name, type, warehouse, inStock, money } = req.body;
 
   if (!name || !type || !warehouse || !inStock) {
@@ -27,21 +26,21 @@ const create = async (req, res) => {
     });
   }
 
-  if (money && !money.price) {
+  if (money && money.currency && !money.price) {
     return res.status(400).send({
       error: "Missing price",
     });
   }
 
-  if (money && !money.currency) {
+  if (money && money.price && !money.currency) {
     return res.status(400).send({
       error: "Missing currency",
     });
   }
 
-  if (money && money.price < 0) {
+  if (money && money.price < 0.01) {
     return res.status(400).send({
-      error: "Price must be greater or equal to 0",
+      error: "Price must be greater or equal to 0.01",
     });
   }
 
@@ -53,7 +52,9 @@ const create = async (req, res) => {
 
   if (money && !currencies.includes(money.currency)) {
     return res.status(400).send({
-      error: `Wrong currency. Only ${currencies.join(", ")} allowed`,
+      error: `Wrong currency. Only ${currencies.join(
+        ", "
+      )} or empty string allowed`,
     });
   }
 
@@ -87,6 +88,7 @@ const getByID = async (req, res) => {
 const update = async (req, res) => {
   try {
     const { id } = req.params;
+    const { money } = req.body;
     const updatedData = req.body;
     const options = { new: true };
 
@@ -110,6 +112,24 @@ const update = async (req, res) => {
       return res
         .status(400)
         .json({ error: "Update not allowed for field 'isDeleted'" });
+    }
+
+    if (money && money.currency && !money.price) {
+      return res.status(400).send({
+        error: "Missing price",
+      });
+    }
+
+    if (money && money.price && !money.currency) {
+      return res.status(400).send({
+        error: "Missing currency",
+      });
+    }
+
+    if (money && money.price < 0) {
+      return res.status(400).send({
+        error: "Price must be greater or equal to 0",
+      });
     }
 
     const result = await Item.findByIdAndUpdate(id, updatedData, options);

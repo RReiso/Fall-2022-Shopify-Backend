@@ -13,8 +13,8 @@ const itemsModel = mongoose.Schema(
     isDeleted: { type: Boolean, default: false },
     deletionComments: { type: String, trim: true },
     money: {
-      price: { type: Number, min: 0 },
-      currency: { type: String, enum: ["USD", "CAD"] },
+      price: { type: Number, min: 0.01 },
+      currency: { type: String, enum: ["USD", "CAD", "", "kk"] },
     },
     inStock: { type: Number, required: true, min: 0 },
   },

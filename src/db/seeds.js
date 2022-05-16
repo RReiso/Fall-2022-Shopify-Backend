@@ -16,6 +16,13 @@ const seedProducts = [
     inStock: 15,
   },
   {
+    name: "ASUS TUF Dash 15 15.6",
+    type: "Laptop",
+    warehouse: "GHI789",
+    money: { price: 1599.99, currency: "CAD" },
+    inStock: 7,
+  },
+  {
     name: "ASUS C523 15.6",
     type: "Chromebook",
     description: "Lorem Ipsum",
@@ -25,9 +32,18 @@ const seedProducts = [
     isDeleted: true,
     deletionComments: "Lorem ipsum sit dolor",
   },
+  {
+    name: 'Samsung 65" 4K UHD HDR LED Tizen Smart',
+    type: "Smart TV",
+    description: "Lorem Ipsum",
+    warehouse: "ABC123",
+    money: { price: 899.99, currency: "USD" },
+    inStock: 0,
+    isDeleted: true,
+  },
 ];
 
 const warehouses = ["ABC123", "CDF456", "GHI789"];
-const currencies = ["USD", "CAD"];
+const currencies = ["USD", "CAD", ""];
 
 module.exports = { seedProducts, warehouses, currencies };
