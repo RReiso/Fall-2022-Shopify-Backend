@@ -17,7 +17,7 @@ const seedProducts = [
   {
     name: "ASUS TUF Dash 15 15.6",
     warehouse: "GHI789",
-    money: { price: 1599.99, currency: "CAD" },
+    money: { price: "", currency: "" },
     inStock: 7,
   },
   {
