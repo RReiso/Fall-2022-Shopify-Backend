@@ -49,6 +49,10 @@ app.get("/deleted", async (req, res) => {
   });
 });
 
+app.get("*", async (req, res) => {
+  res.status(404).send("Page does not exist!");
+});
+
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
