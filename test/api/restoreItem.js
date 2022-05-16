@@ -1,7 +1,7 @@
 let chai = require("chai");
 let chaiHttp = require("chai-http");
-let server = require("../server");
-const Item = require("../src/v1/models/ItemsModel");
+let server = require("../../server");
+const Item = require("../../src/v1/models/ItemsModel");
 
 chai.should();
 chai.use(chaiHttp);
@@ -21,16 +21,16 @@ describe("Items", () => {
     item.save().then(() => done());
   });
 
-  describe("Test PUT route /api/v1/items/:id/delete", () => {
-    it("It should change isDeleted status to true", (done) => {
+  describe("Test PUT route /api/v1/items/:id/restore", () => {
+    it("It should change isDeleted status to false", (done) => {
       chai
         .request(server)
-        .put(`/api/v1/items/${item._id}/delete`)
+        .put(`/api/v1/items/${item._id}/restore`)
         .send()
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a("object");
-          res.body.should.have.property("isDeleted").eql(true);
+          res.body.should.have.property("isDeleted").eql(false);
           done();
         });
     });
@@ -38,21 +38,21 @@ describe("Items", () => {
     it("It should add deletion comments", (done) => {
       chai
         .request(server)
-        .put(`/api/v1/items/${item._id}/delete`)
-        .send({ deletionComments: "Deleting" })
+        .put(`/api/v1/items/${item._id}/restore`)
+        .send({ deletionComments: "Restoring" })
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a("object");
-          res.body.should.have.property("deletionComments").eql("Deleting");
+          res.body.should.have.property("deletionComments").eql("Restoring");
           done();
         });
     });
 
-    it("It should not delete item that does not exist", (done) => {
+    it("It should not restore item that does not exist", (done) => {
       const fakeID = "111111111111111111111111";
       chai
         .request(server)
-        .put(`/api/v1/items/${fakeID}/delete`)
+        .put(`/api/v1/items/${fakeID}/restore`)
         .send()
         .end((err, res) => {
           res.should.have.status(400);

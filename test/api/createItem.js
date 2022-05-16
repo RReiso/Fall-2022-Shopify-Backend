@@ -1,8 +1,8 @@
 let chai = require("chai");
 let chaiHttp = require("chai-http");
-let server = require("../server");
-const { currencies } = require("../src/db/seeds");
-const Item = require("../src/v1/models/ItemsModel");
+let server = require("../../server");
+const { currencies } = require("../../src/db/seeds");
+const Item = require("../../src/v1/models/ItemsModel");
 
 chai.should();
 chai.use(chaiHttp);
@@ -146,7 +146,7 @@ describe("Items", () => {
           res.body.should.be.a("object");
           res.body.should.have
             .property("error")
-            .eql("Price must be greater or equal to 0");
+            .eql("Price must be greater or equal to 0.01");
           done();
         });
     });
@@ -189,7 +189,51 @@ describe("Items", () => {
           res.body.should.be.a("object");
           res.body.should.have
             .property("error")
-            .eql(`Wrong currency. Only ${currencies.join(", ")} allowed`);
+            .eql(
+              `Wrong currency. Only ${currencies.join(
+                ", "
+              )} or empty string allowed`
+            );
+          done();
+        });
+    });
+
+    it("It should not POST an item if only currency is given", (done) => {
+      let item = {
+        name: "Samsung Galaxy A53",
+        type: "Smartphone",
+        warehouse: "ABC123",
+        money: { currency: "GBP" },
+        inStock: 2,
+      };
+      chai
+        .request(server)
+        .post("/api/v1/items")
+        .send(item)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.be.a("object");
+          res.body.should.have.property("error").eql("Missing price");
+          done();
+        });
+    });
+
+    it("It should not POST an item if only price is given", (done) => {
+      let item = {
+        name: "Samsung Galaxy A53",
+        type: "Smartphone",
+        warehouse: "ABC123",
+        money: { price: 77 },
+        inStock: 2,
+      };
+      chai
+        .request(server)
+        .post("/api/v1/items")
+        .send(item)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.be.a("object");
+          res.body.should.have.property("error").eql("Missing currency");
           done();
         });
     });

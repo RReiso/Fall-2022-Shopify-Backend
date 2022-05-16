@@ -1,7 +1,7 @@
 let chai = require("chai");
 let chaiHttp = require("chai-http");
-let server = require("../server");
-const Item = require("../src/v1/models/ItemsModel");
+let server = require("../../server");
+const Item = require("../../src/v1/models/ItemsModel");
 
 chai.should();
 chai.use(chaiHttp);
@@ -21,39 +21,30 @@ describe("Items", () => {
     item.save().then(() => done());
   });
 
-  describe("Test PUT route /api/v1/items/:id/restore", () => {
-    it("It should change isDeleted status to false", (done) => {
+  describe("Test GET route /api/v1/items/:id", () => {
+    it("It should find item", (done) => {
       chai
         .request(server)
-        .put(`/api/v1/items/${item._id}/restore`)
-        .send()
+        .get(`/api/v1/items/${item._id}`)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a("object");
-          res.body.should.have.property("isDeleted").eql(false);
+          res.body.should.have.property("name");
+          res.body.should.have.property("type");
+          res.body.should.have.property("description");
+          res.body.should.have.property("inStock");
+          res.body.should.have.property("money");
+          res.body.should.have.property("warehouse");
           done();
         });
     });
 
-    it("It should add deletion comments", (done) => {
-      chai
-        .request(server)
-        .put(`/api/v1/items/${item._id}/restore`)
-        .send({ deletionComments: "Restoring" })
-        .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.be.a("object");
-          res.body.should.have.property("deletionComments").eql("Restoring");
-          done();
-        });
-    });
-
-    it("It should not restore item that does not exist", (done) => {
+    it("It should not find item if it does nto exist", (done) => {
       const fakeID = "111111111111111111111111";
+
       chai
         .request(server)
-        .put(`/api/v1/items/${fakeID}/restore`)
-        .send()
+        .get(`/api/v1/items/${fakeID}`)
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.be.a("object");
