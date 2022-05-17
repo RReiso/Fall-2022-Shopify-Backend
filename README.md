@@ -17,15 +17,15 @@ git@github.com:RReiso/Fall-2022-Shopify-Backend.git
 cd Fall-2022-Shopify-Backend
 ```
 
-2. Folow the steps in https://www.mongodb.com/docs/atlas/getting-started/ for MongoDB Atlas acount set up. You will need to create a new project, a cluster and two databases (the second one will be used for testing purposes).
+2. Folow the steps in https://www.mongodb.com/docs/atlas/getting-started/ for MongoDB Atlas acount setup. You will need to create a new project, a cluster and two databases (the second one will be used for testing purposes).
 
-3. Create the .env file by using .env.example as a reference:
+3. Create the `.env` file by using `.env.example` as a reference:
 
 ```
 cp .env.example .env
 ```
 
-4. Add the appropriate MongoDB Atlas database connection strings to the environment variables.
+4. Add the appropriate MongoDB Atlas database connection strings to the environment variables in `.env` file.
 
 5. Install dependencies:
 
@@ -90,9 +90,9 @@ Status code: 200
     },
 ```
 
-`POST /items` - creates new inventory item
+`POST /items` - creates a new inventory item
 
-Required fields: `name`, `warehouse`, `inStock`.
+Required fields: `name`, `warehouse`, `inStock`
 
 Example request object:
 
