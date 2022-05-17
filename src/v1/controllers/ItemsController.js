@@ -69,21 +69,6 @@ const create = async (req, res) => {
   }
 };
 
-const getByID = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const item = await Item.findById(id);
-
-    if (!item) {
-      return res.status(400).json({ error: "Item does not exist" });
-    }
-
-    res.status(200).json(item);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
 const update = async (req, res) => {
   try {
     const { id } = req.params;
@@ -177,7 +162,6 @@ const restore = async (req, res) => {
 module.exports = {
   getAll,
   create,
-  getByID,
   update,
   destroy,
   restore,

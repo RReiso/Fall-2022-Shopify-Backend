@@ -8,9 +8,6 @@ router.get("/", ItemsController.getAll);
 // Create new inventory item
 router.post("/", ItemsController.create);
 
-// Read one inventory item
-router.get("/:id", ItemsController.getByID);
-
 // Update inventory item
 router.put("/:id", ItemsController.update);
 
