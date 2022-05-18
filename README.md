@@ -8,6 +8,13 @@ This is my solution for Fall 2022 - Shopify Developer Intern Challenge. I built 
 
 The application is deployed on [Replit](https://replit.com/@rreiso/Fall-2022-Shopify-Backend#.replit). You can click `run` to start the app yourself or [see and interact with it here](https://fall-2022-shopify-backend--rreiso.repl.co/).
 
+## Project screenshots
+
+![Home page](./public/images/one.png)
+![Home page](./public/images/two.png)
+![Home page](./public/images/three.png)
+![Home page](./public/images/four.png)
+
 ## Setting up the project locally
 
 1. Clone the repository:
